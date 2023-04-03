@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from website.forms import SignUpForm
+from website.models import Record
 
 # Create your views here.
 
@@ -18,7 +19,9 @@ def home(request):
         else:
             messages.error(request, "Invalid username or password.")
             return redirect("home")
-    return render(request, "home.html", {})
+
+    reccords = Record.objects.all()
+    return render(request, "home.html", {"records": reccords})
 
 
 def login_user(request):
